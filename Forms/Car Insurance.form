@@ -1,0 +1,234 @@
+{
+  "executionPlatform": "Camunda Cloud",
+  "executionPlatformVersion": "8.3.0",
+  "exporter": {
+    "name": "Camunda Web Modeler",
+    "version": "6c0f1c1"
+  },
+  "schemaVersion": 11,
+  "components": [
+    {
+      "text": "### Car Insurance Claim",
+      "type": "text",
+      "layout": {
+        "row": "row_1",
+        "col": "auto"
+      },
+      "id": "Heading_1"
+    },
+    {
+      "text": "##### Personal Information",
+      "type": "text",
+      "layout": {
+        "row": "row_2",
+        "col": "auto"
+      },
+      "id": "Subheading_1"
+    },
+    {
+      "components": [
+        {
+          "type": "textfield",
+          "layout": {
+            "row": null,
+            "col": "auto"
+          },
+          "id": "Textfield_1",
+          "label": "Full Name",
+          "validate": {
+            "required": true
+          },
+          "key": "fullName"
+        },
+        {
+          "type": "textfield",
+          "layout": {
+            "row": "Row_054wmbe",
+            "col": "auto"
+          },
+          "id": "Textfield_2",
+          "label": "Address",
+          "validate": {
+            "required": true
+          },
+          "key": "address"
+        }
+      ],
+      "showOutline": true,
+      "label": "Group",
+      "type": "group",
+      "layout": {
+        "row": "row_3",
+        "columns": null
+      },
+      "id": "Field_1nu5zh3"
+    },
+    {
+      "type": "textfield",
+      "layout": {
+        "row": "row_5",
+        "col": "auto"
+      },
+      "id": "Textfield_3",
+      "label": "Phone Number",
+      "validate": {
+        "required": true
+      },
+      "key": "phoneNumber"
+    },
+    {
+      "height": 160,
+      "label": "Spacer",
+      "type": "spacer",
+      "layout": {
+        "row": "row_6",
+        "columns": null
+      },
+      "id": "Field_1rw5ws8"
+    },
+    {
+      "text": "##### Vehicle Information",
+      "type": "text",
+      "layout": {
+        "row": "row_6",
+        "col": "auto"
+      },
+      "id": "Subheading_2"
+    },
+    {
+      "label": "Image view",
+      "type": "image",
+      "layout": {
+        "row": "row_6",
+        "columns": null
+      },
+      "id": "Field_00p4y8t"
+    },
+    {
+      "type": "textfield",
+      "layout": {
+        "row": "row_7",
+        "col": "auto"
+      },
+      "id": "Textfield_4",
+      "label": "Car Make",
+      "validate": {
+        "required": true
+      },
+      "key": "carMake"
+    },
+    {
+      "type": "textfield",
+      "layout": {
+        "row": "row_8",
+        "col": "auto"
+      },
+      "id": "Textfield_5",
+      "label": "Car Model",
+      "validate": {
+        "required": true
+      },
+      "key": "carModel"
+    },
+    {
+      "type": "textfield",
+      "layout": {
+        "row": "row_9",
+        "col": "auto"
+      },
+      "id": "Textfield_6",
+      "label": "Car Year",
+      "validate": {
+        "required": true
+      },
+      "key": "carYear"
+    },
+    {
+      "type": "textfield",
+      "layout": {
+        "row": "row_10",
+        "col": "auto"
+      },
+      "id": "Textfield_7",
+      "label": "Car License Plate",
+      "validate": {
+        "required": true
+      },
+      "key": "carLicensePlate"
+    },
+    {
+      "text": "##### Claim Details",
+      "type": "text",
+      "layout": {
+        "row": "row_11",
+        "col": "auto"
+      },
+      "id": "Subheading_3"
+    },
+    {
+      "type": "textarea",
+      "layout": {
+        "row": "row_12",
+        "col": "auto"
+      },
+      "id": "Textarea_1",
+      "label": "Description of the Incident",
+      "validate": {
+        "required": true
+      },
+      "key": "incidentDescription"
+    },
+    {
+      "subtype": "datetime",
+      "dateLabel": "Date of the Incident",
+      "type": "datetime",
+      "layout": {
+        "row": "row_13",
+        "col": "auto"
+      },
+      "id": "Datetime_1",
+      "timeLabel": "Time of the Incident",
+      "validate": {
+        "required": true
+      },
+      "key": "incidentDateTime",
+      "timeInterval": 15
+    },
+    {
+      "type": "textfield",
+      "layout": {
+        "row": "row_14",
+        "col": "auto"
+      },
+      "id": "Textfield_8",
+      "label": "Estimate of Damages",
+      "validate": {
+        "required": true
+      },
+      "key": "damagesEstimate"
+    },
+    {
+      "type": "checkbox",
+      "layout": {
+        "row": "row_15",
+        "col": "auto"
+      },
+      "id": "Checkbox_1",
+      "label": "Additional Documents",
+      "key": "additionalDocuments"
+    },
+    {
+      "action": "submit",
+      "type": "button",
+      "layout": {
+        "row": "row_16",
+        "col": "auto"
+      },
+      "id": "Button_1",
+      "label": "Submit"
+    }
+  ],
+  "generated": true,
+  "type": "default",
+  "id": "Form_1l8q6lj"
+}

@@ -1,0 +1,198 @@
+{
+  "executionPlatform": "Camunda Cloud",
+  "executionPlatformVersion": "8.3.0",
+  "exporter": {
+    "name": "Camunda Web Modeler",
+    "version": "6c0f1c1"
+  },
+  "schemaVersion": 11,
+  "components": [
+    {
+      "text": "### Prepare patient treatment plan",
+      "type": "text",
+      "layout": {
+        "row": "row_1",
+        "col": "auto"
+      },
+      "id": "Heading_1"
+    },
+    {
+      "text": "##### Patient information",
+      "type": "text",
+      "layout": {
+        "row": "row_2",
+        "col": "auto"
+      },
+      "id": "Subheading_1"
+    },
+    {
+      "type": "textfield",
+      "layout": {
+        "row": "row_3",
+        "col": "auto"
+      },
+      "id": "Textfield_1",
+      "label": "Patient Name",
+      "validate": {
+        "minLength": 0,
+        "maxLength": 100,
+        "required": true
+      },
+      "key": "patientName"
+    },
+    {
+      "subtype": "date",
+      "dateLabel": "Date of Birth",
+      "type": "datetime",
+      "layout": {
+        "row": "row_3",
+        "col": "auto"
+      },
+      "id": "Date_1",
+      "validate": {
+        "required": true
+      },
+      "key": "dateOfBirth"
+    },
+    {
+      "type": "textfield",
+      "layout": {
+        "row": "row_4",
+        "col": "auto"
+      },
+      "id": "Textfield_2",
+      "label": "Patient Address",
+      "validate": {
+        "minLength": 0,
+        "maxLength": 200,
+        "required": true
+      },
+      "key": "patientAddress"
+    },
+    {
+      "text": "##### Medical history",
+      "type": "text",
+      "layout": {
+        "row": "row_5",
+        "col": "auto"
+      },
+      "id": "Subheading_2"
+    },
+    {
+      "type": "textarea",
+      "layout": {
+        "row": "row_6",
+        "col": "auto"
+      },
+      "id": "Textarea_1",
+      "label": "Medical History",
+      "validate": {
+        "minLength": 0,
+        "maxLength": 500,
+        "required": true
+      },
+      "key": "medicalHistory"
+    },
+    {
+      "text": "##### Treatment plan",
+      "type": "text",
+      "layout": {
+        "row": "row_7",
+        "col": "auto"
+      },
+      "id": "Subheading_3"
+    },
+    {
+      "type": "textarea",
+      "layout": {
+        "row": "row_8",
+        "col": "auto"
+      },
+      "id": "Textarea_2",
+      "label": "Treatment Plan",
+      "validate": {
+        "minLength": 0,
+        "maxLength": 500,
+        "required": true
+      },
+      "key": "treatmentPlan"
+    },
+    {
+      "type": "checkbox",
+      "layout": {
+        "row": "row_9",
+        "col": "auto"
+      },
+      "id": "Checkbox_1",
+      "label": "Medication",
+      "validate": {
+        "required": false
+      },
+      "key": "medication"
+    },
+    {
+      "type": "checkbox",
+      "layout": {
+        "row": "row_9",
+        "col": "auto"
+      },
+      "id": "Checkbox_2",
+      "label": "Physical Therapy",
+      "validate": {
+        "required": false
+      },
+      "key": "physicalTherapy"
+    },
+    {
+      "type": "checkbox",
+      "layout": {
+        "row": "row_9",
+        "col": "auto"
+      },
+      "id": "Checkbox_3",
+      "label": "Surgery",
+      "validate": {
+        "required": false
+      },
+      "key": "surgery"
+    },
+    {
+      "text": "##### Follow-up",
+      "type": "text",
+      "layout": {
+        "row": "row_10",
+        "col": "auto"
+      },
+      "id": "Subheading_4"
+    },
+    {
+      "subtype": "datetime",
+      "dateLabel": "Follow-up Date",
+      "type": "datetime",
+      "layout": {
+        "row": "row_11",
+        "col": "auto"
+      },
+      "id": "Datetime_1",
+      "timeLabel": "Follow-up Time",
+      "validate": {
+        "required": true
+      },
+      "key": "followUpAppointment",
+      "timeInterval": 15
+    },
+    {
+      "action": "submit",
+      "type": "button",
+      "layout": {
+        "row": "row_12",
+        "col": "auto"
+      },
+      "id": "Button_1",
+      "label": "Submit"
+    }
+  ],
+  "generated": true,
+  "type": "default",
+  "id": "Form_1xdj20x"
+}

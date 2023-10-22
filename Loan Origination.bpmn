@@ -1,0 +1,682 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:zeebe="http://camunda.org/schema/zeebe/1.0" xmlns:modeler="http://camunda.org/schema/modeler/1.0" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" id="Definitions_1" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Web Modeler" exporterVersion="6c0f1c1" modeler:executionPlatform="Camunda Cloud" modeler:executionPlatformVersion="8.3.0" camunda:diagramRelationId="1376195b-733a-4a98-983b-91dfa2036c02">
+  <bpmn:collaboration id="Collaboration_1eoxj2e">
+    <bpmn:participant id="Participant_035380y" name="Loan Office" processRef="LoanOrigination" />
+    <bpmn:participant id="Participant_1vnesut" name="Loan Requester" />
+    <bpmn:messageFlow id="Flow_06cs1jb" sourceRef="Participant_1vnesut" targetRef="StartEvent_1" />
+    <bpmn:messageFlow id="Flow_17t1urq" sourceRef="Activity_05k3m0o" targetRef="Participant_1vnesut" />
+    <bpmn:messageFlow id="Flow_1vcik05" sourceRef="Activity_1vdyuoi" targetRef="Participant_1vnesut" />
+    <bpmn:messageFlow id="Flow_183nfwt" sourceRef="Activity_1d86pvi" targetRef="Participant_1vnesut" />
+    <bpmn:messageFlow id="Flow_0rs75w5" sourceRef="Participant_1vnesut" targetRef="Activity_1d86pvi" />
+  </bpmn:collaboration>
+  <bpmn:process id="LoanOrigination" name="Loan Origination" isExecutable="true">
+    <bpmn:extensionElements>
+      <zeebe:userTaskForm id="userTaskForm_1uvuo0p">{
+  "executionPlatform": "Camunda Cloud",
+  "executionPlatformVersion": "8.3.0",
+  "exporter": {
+    "name": "Camunda Web Modeler",
+    "version": "6c0f1c1"
+  },
+  "schemaVersion": 11,
+  "components": [
+    {
+      "label": "Image view",
+      "type": "image",
+      "layout": {
+        "row": "Row_1180lpq",
+        "columns": null
+      },
+      "id": "Field_084r3mt",
+      "source": "https://www.credible.com/blog/wp-content/uploads/2019/07/how-to-pay-off-debt.png"
+    },
+    {
+      "text": "We can offer you a loan from 1,000 to 50,000 USD in 2 easy installment plans.",
+      "label": "Text view",
+      "type": "text",
+      "layout": {
+        "row": "Row_1kyg984",
+        "columns": null
+      },
+      "id": "Field_0gqjo0p"
+    },
+    {
+      "label": "Requested loan",
+      "type": "number",
+      "layout": {
+        "row": "Row_1m649qh",
+        "columns": null
+      },
+      "id": "Field_1sww6sc",
+      "key": "requestedLoan",
+      "increment": "1000",
+      "validate": {
+        "min": 1000,
+        "max": 50000,
+        "required": true
+      },
+      "appearance": {
+        "prefixAdorner": "USD"
+      },
+      "defaultValue": 1000
+    },
+    {
+      "values": [
+        {
+          "label": "12 Months",
+          "value": "12"
+        },
+        {
+          "label": "24 Months",
+          "value": "24"
+        }
+      ],
+      "label": "Installments",
+      "type": "select",
+      "layout": {
+        "row": "Row_1m649qh",
+        "columns": null
+      },
+      "id": "Field_0wksvl9",
+      "key": "requestedInstallments",
+      "defaultValue": "24"
+    },
+    {
+      "components": [
+        {
+          "label": "First Name",
+          "type": "textfield",
+          "layout": {
+            "row": "Row_00y89wv",
+            "columns": null
+          },
+          "id": "Field_0fnqlap",
+          "key": "name.first"
+        },
+        {
+          "label": "Last Name",
+          "type": "textfield",
+          "layout": {
+            "row": "Row_00y89wv",
+            "columns": null
+          },
+          "id": "Field_0e38u44",
+          "key": "name.last"
+        },
+        {
+          "label": "Email address",
+          "type": "textfield",
+          "layout": {
+            "row": null,
+            "columns": null
+          },
+          "id": "Field_1v540c6",
+          "key": "emailAddress",
+          "appearance": {
+            "prefixAdorner": "@"
+          },
+          "properties": { },
+          "validate": {
+            "validationType": "email",
+            "required": true
+          }
+        }
+      ],
+      "showOutline": true,
+      "label": "Personal Information",
+      "type": "group",
+      "layout": {
+        "row": "Row_0axzqo8",
+        "columns": null
+      },
+      "id": "Field_1yc4pfl",
+      "path": "personalInformation"
+    },
+    {
+      "text": "------------------------------------------------------------
+Price Information in accordance with PAngV (Preisangabenverordnung)
+
+Effective Annual Interest Rate: 5.25% to 12.75%*
+
+1. Loan Details:
+   - Loan Type: Personal Loan
+   - Loan Amount: $ {{requestedLoan}}
+   - Loan Term: {{requestedInstallments}} months
+   - Interest Rate Type: Fixed
+
+2. Monthly Installment Estimate: ${{floor((requestedLoan + (requestedLoan * 0.0525)) / ( if requestedInstallments = \"24\" then 24 else 12))}}
+   - This is an estimated monthly payment based on the provided loan details.
+
+3. Additional Costs:
+   - Application Fee: $100
+   - Insurance Costs: $75 (annually)
+   - Other Fees: None
+
+4. Early Repayment Information:
+   - Early Repayment Penalties: No penalties for early repayment
+
+5. Important Notes:
+   - The effective annual interest rate (APR) represents the total cost of the loan and may vary based on the final loan agreement.
+   - Additional fees may apply depending on the specific terms and conditions of the loan agreement.
+
+------------------------------------------------------------
+* The effective annual interest rate (APR) is calculated based on the provided loan terms and may vary based on the final loan agreement.
+
+Please consult with your lender for detailed and customized loan terms.
+
+Camundanzia Inc.
+123 Main Street
+Phone: (555) 123-4567
+Email: info@camundanzia.com
+Website: www.camundanzia.com
+
+",
+      "label": "Text view",
+      "type": "text",
+      "layout": {
+        "row": "Row_05sky8w",
+        "columns": null
+      },
+      "id": "Field_0jdcuf1"
+    }
+  ],
+  "type": "default",
+  "id": "Form_0kywous"
+}</zeebe:userTaskForm>
+      <zeebe:userTaskForm id="userTaskForm_35p9a8i">{
+  "executionPlatform": "Camunda Cloud",
+  "executionPlatformVersion": "8.2.0",
+  "exporter": {
+    "name": "Camunda Web Modeler",
+    "version": "6c0f1c1"
+  },
+  "schemaVersion": 11,
+  "components": [
+    {
+      "text": "**Max Allowance**
+{{loanOptions.currency}} {{loanOptions.maxAllowance}}",
+      "label": "Text view",
+      "type": "text",
+      "layout": {
+        "row": "Row_0w9nl89",
+        "columns": 4
+      },
+      "id": "Field_13vsqhg"
+    },
+    {
+      "text": "**Currently Used**
+{{loanOptions.currency}} {{loanOptions.currentlyUsed}}",
+      "label": "Text view",
+      "type": "text",
+      "layout": {
+        "row": "Row_0w9nl89",
+        "columns": null
+      },
+      "id": "Field_0szrrez"
+    },
+    {
+      "label": "Loan offer",
+      "type": "number",
+      "layout": {
+        "row": "Row_1aj6q8t",
+        "columns": null
+      },
+      "id": "Field_131agji",
+      "key": "offeredAdditionalLoan",
+      "validate": {
+        "max": "=loanOptions.maxAllowance - loanOptions.currentlyUsed"
+      },
+      "appearance": {
+        "prefixAdorner": "=loanOptions.currency"
+      },
+      "description": "Remaining allowance is {{loanOptions.currency}} {{loanOptions.maxAllowance - loanOptions.currentlyUsed - offeredAdditionalLoan}}",
+      "increment": "1000",
+      "defaultValue": 1000
+    },
+    {
+      "label": "Installment in Months",
+      "type": "select",
+      "layout": {
+        "row": "Row_1aj6q8t",
+        "columns": null
+      },
+      "id": "Field_1kr1f8g",
+      "key": "months",
+      "defaultValue": "&lt;none&gt;",
+      "valuesExpression": "=loanOptions.monthOptions",
+      "description": "The prospect requested {{requestedInstallments}} months installment"
+    },
+    {
+      "components": [
+        {
+          "text": "**Annual Rate**
+{{loanOptions.rate}}%",
+          "label": "Text view",
+          "type": "text",
+          "layout": {
+            "row": "Row_0m1wsij",
+            "columns": null
+          },
+          "id": "Field_06f8ql8"
+        },
+        {
+          "text": "**New loan**
+{{loanOptions.currency}} {{loanOptions.currentlyUsed + offeredAdditionalLoan}}",
+          "label": "Text view",
+          "type": "text",
+          "layout": {
+            "row": "Row_0m1wsij",
+            "columns": null
+          },
+          "id": "Field_1uscggn"
+        },
+        {
+          "text": "**Total Interest of new Loan**
+{{loanOptions.currency}} {{
+  floor(
+    (loanOptions.currentlyUsed + offeredAdditionalLoan) 
+        * loanOptions.rate / 100 * (months / 12)
+  )
+}}",
+          "label": "Text view",
+          "type": "text",
+          "layout": {
+            "row": "Row_1y5sav7",
+            "columns": null
+          },
+          "id": "Field_04ej0ya"
+        }
+      ],
+      "showOutline": false,
+      "label": "New Loan Details",
+      "type": "group",
+      "layout": {
+        "row": "Row_1j8s3f1",
+        "columns": null
+      },
+      "id": "Field_008u5to",
+      "conditional": {
+        "hide": "=(loanOptions.maxAllowance 
+  - loanOptions.currentlyUsed 
+  - offeredAdditionalLoan) &lt; 0
+"
+      },
+      "path": "newLoanDetailsx"
+    },
+    {
+      "components": [
+        {
+          "text": "```
+{
+  \"loanOptions\": {
+    \"maxAllowance\": 50000,
+    \"currentlyUsed\": 39000,
+    \"rate\": 5.9,
+    \"currency\": \"USD\",
+    \"monthOptions\": [12, 24, 32]
+  },
+  \"requestedInstallments\": \"12\",
+  \"requestedLoan\": 3000
+}
+```",
+          "label": "Text view",
+          "type": "text",
+          "layout": {
+            "row": "Row_0awbuif",
+            "columns": null
+          },
+          "id": "Field_0irndim"
+        }
+      ],
+      "showOutline": true,
+      "label": "Example Data",
+      "type": "group",
+      "layout": {
+        "row": "Row_0b7nhby",
+        "columns": null
+      },
+      "id": "Field_1j382oe",
+      "conditional": {
+        "hide": "=true"
+      },
+      "path": "exampleData"
+    }
+  ],
+  "type": "default",
+  "id": "Form_1bi1yxu"
+}</zeebe:userTaskForm>
+    </bpmn:extensionElements>
+    <bpmn:startEvent id="StartEvent_1" name="Loan Requested">
+      <bpmn:extensionElements>
+        <zeebe:properties>
+          <zeebe:property name="camundaModeler:exampleOutputJson" value="{&#10;  &#34;requestedLoan&#34;: 1000,&#10;  &#34;requestedInstallments&#34;: &#34;24&#34;,&#10;  &#34;personalInformation&#34;: {&#10;    &#34;name&#34;: {&#10;      &#34;first&#34;: &#34;John&#34;,&#10;      &#34;last&#34;: &#34;Doe&#34;&#10;    },&#10;    &#34;emailAddress&#34;: &#34;john.doe@camunda.com&#34;&#10;  }&#10;}" />
+          <zeebe:property name="publicAccess" value="true" />
+        </zeebe:properties>
+        <zeebe:formDefinition formKey="camunda-forms:bpmn:userTaskForm_1uvuo0p" />
+      </bpmn:extensionElements>
+      <bpmn:outgoing>Flow_1hjhpfh</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:scriptTask id="Activity_0o4io7a" name="Gather limit + risk information">
+      <bpmn:extensionElements>
+        <zeebe:script expression="={&#10;  &#34;maxAllowance&#34;: 50000,&#10;  &#34;currentlyUsed&#34;: 39000,&#10;  &#34;rate&#34;: 5.9,&#10;  &#34;currency&#34;: &#34;USD&#34;,&#10;  &#34;monthOptions&#34;: [12, 24, 32],&#10;  &#34;months&#34;: 12,&#10;  &#34;autoOffer&#34;: false&#10;}" resultVariable="loanOptions" />
+        <zeebe:properties>
+          <zeebe:property name="camundaModeler:exampleOutputJson" value="{&#10;&#34;loanOptions&#34;: {&#10;  &#34;maxAllowance&#34;: 50000,&#10;  &#34;currentlyUsed&#34;: 39000,&#10;  &#34;rate&#34;: 5.9,&#10;  &#34;currency&#34;: &#34;USD&#34;,&#10;  &#34;monthOptions&#34;: [12, 24, 32],&#10;  &#34;months&#34;: 12,&#10;  &#34;autoOffer&#34;: false&#10;}}" />
+        </zeebe:properties>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_1hjhpfh</bpmn:incoming>
+      <bpmn:outgoing>Flow_0h6hg3f</bpmn:outgoing>
+      <bpmn:dataOutputAssociation id="DataOutputAssociation_1qnw29v">
+        <bpmn:targetRef>DataStoreReference_1d1j8w7</bpmn:targetRef>
+      </bpmn:dataOutputAssociation>
+    </bpmn:scriptTask>
+    <bpmn:sequenceFlow id="Flow_1hjhpfh" sourceRef="StartEvent_1" targetRef="Activity_0o4io7a" />
+    <bpmn:sequenceFlow id="Flow_0h6hg3f" sourceRef="Activity_0o4io7a" targetRef="Gateway_1r0uafx" />
+    <bpmn:sequenceFlow id="Flow_0y2h34x" sourceRef="Activity_1d86pvi" targetRef="Gateway_0kc8xj5" />
+    <bpmn:sequenceFlow id="Flow_18bpvi6" sourceRef="Gateway_1r0uafx" targetRef="Activity_1d86pvi">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">=false</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:exclusiveGateway id="Gateway_1r0uafx" name="New customer?" default="Flow_0iocsr8">
+      <bpmn:incoming>Flow_0h6hg3f</bpmn:incoming>
+      <bpmn:outgoing>Flow_18bpvi6</bpmn:outgoing>
+      <bpmn:outgoing>Flow_0iocsr8</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:sequenceFlow id="Flow_0hoincd" sourceRef="Gateway_0kc8xj5" targetRef="Gateway_1kuo7pl" />
+    <bpmn:sequenceFlow id="Flow_0iocsr8" name="Existing customer" sourceRef="Gateway_1r0uafx" targetRef="Gateway_0kc8xj5" />
+    <bpmn:exclusiveGateway id="Gateway_0kc8xj5">
+      <bpmn:incoming>Flow_0y2h34x</bpmn:incoming>
+      <bpmn:incoming>Flow_0iocsr8</bpmn:incoming>
+      <bpmn:outgoing>Flow_0hoincd</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:callActivity id="Activity_1d86pvi" name="KYC">
+      <bpmn:extensionElements>
+        <zeebe:calledElement processId="kyc" propagateAllChildVariables="false" />
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_18bpvi6</bpmn:incoming>
+      <bpmn:outgoing>Flow_0y2h34x</bpmn:outgoing>
+    </bpmn:callActivity>
+    <bpmn:userTask id="Activity_03fvuft" name="Provide loan offer">
+      <bpmn:extensionElements>
+        <zeebe:assignmentDefinition candidateGroups="Loan Office" />
+        <zeebe:taskSchedule dueDate="=now() + duration(&#34;PT15M&#34;)" />
+        <zeebe:ioMapping>
+          <zeebe:input source="=requestedLoan" target="offeredAdditionalLoan" />
+          <zeebe:input source="=number(requestedInstallments)" target="requestedInstallments" />
+          <zeebe:input source="=loanOptions" target="loanOptions" />
+          <zeebe:output source="=offeredAdditionalLoan" target="offeredAdditionalLoan" />
+          <zeebe:output source="=months" target="offeredInstallments" />
+        </zeebe:ioMapping>
+        <zeebe:formDefinition formKey="camunda-forms:bpmn:userTaskForm_35p9a8i" />
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_170qqcw</bpmn:incoming>
+      <bpmn:outgoing>Flow_05tzt9z</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:exclusiveGateway id="Gateway_18ynite" name="Auto offer?" default="Flow_170qqcw">
+      <bpmn:incoming>Flow_11kz4pi</bpmn:incoming>
+      <bpmn:outgoing>Flow_170qqcw</bpmn:outgoing>
+      <bpmn:outgoing>Flow_1oo3tg5</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:serviceTask id="Activity_05k3m0o" name="Send offer" zeebe:modelerTemplate="io.camunda.connectors.SendGrid.v2" zeebe:modelerTemplateVersion="2" zeebe:modelerTemplateIcon="data:image/svg+xml;utf8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Cpath%20d%3D%22M0.285706%205.40847H5.43837V10.5611H0.285706V5.40847Z%22%20fill%3D%22white%22%2F%3E%0A%3Cpath%20d%3D%22M0.285706%205.40847H5.43837V10.5611H0.285706V5.40847Z%22%20fill%3D%22%2399E1F4%22%2F%3E%0A%3Cpath%20d%3D%22M5.43837%2010.5611L10.5611%2010.5616V15.6844H5.43837V10.5611Z%22%20fill%3D%22white%22%2F%3E%0A%3Cpath%20d%3D%22M5.43837%2010.5611L10.5611%2010.5616V15.6844H5.43837V10.5611Z%22%20fill%3D%22%2399E1F4%22%2F%3E%0A%3Cpath%20d%3D%22M0.285706%2015.6846L5.43837%2015.6844V15.7143H0.285706V15.6846ZM0.285706%2010.5619H5.43837V15.6844L0.285706%2015.6846V10.5619Z%22%20fill%3D%22%231A82E2%22%2F%3E%0A%3Cpath%20d%3D%22M5.43837%200.285706H10.5611V5.40847H5.43837V0.285706ZM10.5616%205.43837H15.7143V10.5611H10.5616V5.43837Z%22%20fill%3D%22%2300B3E3%22%2F%3E%0A%3Cpath%20d%3D%22M5.43837%2010.5611L10.5611%2010.5616V5.40847H5.43837V10.5611Z%22%20fill%3D%22%23009DD9%22%2F%3E%0A%3Cpath%20d%3D%22M10.5611%200.285706H15.7143V5.40847H10.5611V0.285706Z%22%20fill%3D%22%231A82E2%22%2F%3E%0A%3Cpath%20d%3D%22M10.5611%205.40847H15.7143V5.43837H10.5616L10.5611%205.40847Z%22%20fill%3D%22%231A82E2%22%2F%3E%0A%3C%2Fsvg%3E">
+      <bpmn:extensionElements>
+        <zeebe:taskDefinition type="io.camunda:sendgrid:1" />
+        <zeebe:ioMapping>
+          <zeebe:input source="{{secrets.missing}}" target="apiKey" />
+          <zeebe:input source="Camundanzia Loan" target="from.name" />
+          <zeebe:input source="hello@camundanzia.com" target="from.email" />
+          <zeebe:input source="Loan Requester" target="to.name" />
+          <zeebe:input source="=personalInformation.emailAddress" target="to.email" />
+          <zeebe:input source="mail" target="unMappedFieldNotUseInModel.mailType" />
+          <zeebe:input source="Loan Offer" target="content.subject" />
+          <zeebe:input source="text/plain" target="content.type" />
+          <zeebe:input source="=&#34;We can offer you &#34; + &#10;  loanOptions.currency + &#34; &#34;  + &#10;  offeredAdditionalLoan + &#34; with &#34; + &#10;  months + &#34; monthly installments with a yearly interest rate of &#34; + &#10;  loanOptions.rate + &#34;%.&#34;" target="content.value" />
+        </zeebe:ioMapping>
+        <zeebe:taskHeaders />
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_0phg418</bpmn:incoming>
+      <bpmn:outgoing>Flow_04xp013</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:exclusiveGateway id="Gateway_0fwj0nr">
+      <bpmn:incoming>Flow_05tzt9z</bpmn:incoming>
+      <bpmn:incoming>Flow_14mxw1g</bpmn:incoming>
+      <bpmn:outgoing>Flow_0phg418</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:endEvent id="Event_01vy5kc" name="Loan offered">
+      <bpmn:incoming>Flow_04xp013</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:exclusiveGateway id="Gateway_1kuo7pl" name="Limit available?" default="Flow_1e3e9sg">
+      <bpmn:incoming>Flow_0hoincd</bpmn:incoming>
+      <bpmn:outgoing>Flow_11kz4pi</bpmn:outgoing>
+      <bpmn:outgoing>Flow_1e3e9sg</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:scriptTask id="Activity_18kz6vb" name="Create auto-offer">
+      <bpmn:extensionElements>
+        <zeebe:ioMapping>
+          <zeebe:output source="=autoOffer.offeredAdditionalLoan" target="offeredAdditionalLoan" />
+          <zeebe:output source="=autoOffer.months" target="months" />
+        </zeebe:ioMapping>
+        <zeebe:script expression="={&#10;  offeredAdditionalLoan: 5000,&#10;  offeredInstallments: 12&#10;}" resultVariable="autoOffer" />
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_1oo3tg5</bpmn:incoming>
+      <bpmn:outgoing>Flow_14mxw1g</bpmn:outgoing>
+    </bpmn:scriptTask>
+    <bpmn:serviceTask id="Activity_1vdyuoi" name="Send rejection note" zeebe:modelerTemplate="io.camunda.connectors.SendGrid.v2" zeebe:modelerTemplateVersion="2" zeebe:modelerTemplateIcon="data:image/svg+xml;utf8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Cpath%20d%3D%22M0.285706%205.40847H5.43837V10.5611H0.285706V5.40847Z%22%20fill%3D%22white%22%2F%3E%0A%3Cpath%20d%3D%22M0.285706%205.40847H5.43837V10.5611H0.285706V5.40847Z%22%20fill%3D%22%2399E1F4%22%2F%3E%0A%3Cpath%20d%3D%22M5.43837%2010.5611L10.5611%2010.5616V15.6844H5.43837V10.5611Z%22%20fill%3D%22white%22%2F%3E%0A%3Cpath%20d%3D%22M5.43837%2010.5611L10.5611%2010.5616V15.6844H5.43837V10.5611Z%22%20fill%3D%22%2399E1F4%22%2F%3E%0A%3Cpath%20d%3D%22M0.285706%2015.6846L5.43837%2015.6844V15.7143H0.285706V15.6846ZM0.285706%2010.5619H5.43837V15.6844L0.285706%2015.6846V10.5619Z%22%20fill%3D%22%231A82E2%22%2F%3E%0A%3Cpath%20d%3D%22M5.43837%200.285706H10.5611V5.40847H5.43837V0.285706ZM10.5616%205.43837H15.7143V10.5611H10.5616V5.43837Z%22%20fill%3D%22%2300B3E3%22%2F%3E%0A%3Cpath%20d%3D%22M5.43837%2010.5611L10.5611%2010.5616V5.40847H5.43837V10.5611Z%22%20fill%3D%22%23009DD9%22%2F%3E%0A%3Cpath%20d%3D%22M10.5611%200.285706H15.7143V5.40847H10.5611V0.285706Z%22%20fill%3D%22%231A82E2%22%2F%3E%0A%3Cpath%20d%3D%22M10.5611%205.40847H15.7143V5.43837H10.5616L10.5611%205.40847Z%22%20fill%3D%22%231A82E2%22%2F%3E%0A%3C%2Fsvg%3E">
+      <bpmn:extensionElements>
+        <zeebe:taskDefinition type="io.camunda:sendgrid:1" />
+        <zeebe:ioMapping>
+          <zeebe:input source="{{secrets.missing}}" target="apiKey" />
+          <zeebe:input source="Camundanzia Loan" target="from.name" />
+          <zeebe:input source="hello@camundanzia.com" target="from.email" />
+          <zeebe:input source="Loan Requester" target="to.name" />
+          <zeebe:input source="=personalInformation.emailAddress" target="to.email" />
+          <zeebe:input source="mail" target="unMappedFieldNotUseInModel.mailType" />
+          <zeebe:input source="We are sorry" target="content.subject" />
+          <zeebe:input source="text/plain" target="content.type" />
+          <zeebe:input source="We can&#39;t offer you a loan at the moment." target="content.value" />
+        </zeebe:ioMapping>
+        <zeebe:taskHeaders />
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_1e3e9sg</bpmn:incoming>
+      <bpmn:outgoing>Flow_1s88hj3</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:endEvent id="Event_09eco3s" name="Loan rejected">
+      <bpmn:incoming>Flow_1s88hj3</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_170qqcw" name="Manual offer" sourceRef="Gateway_18ynite" targetRef="Activity_03fvuft" />
+    <bpmn:sequenceFlow id="Flow_05tzt9z" sourceRef="Activity_03fvuft" targetRef="Gateway_0fwj0nr" />
+    <bpmn:sequenceFlow id="Flow_11kz4pi" name="Limit available" sourceRef="Gateway_1kuo7pl" targetRef="Gateway_18ynite">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">=(loanOptions.maxAllowance - loanOptions.currentlyUsed) &gt; 0</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="Flow_1oo3tg5" name="Auto offer" sourceRef="Gateway_18ynite" targetRef="Activity_18kz6vb">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">=loanOptions.autoOffer</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="Flow_0phg418" sourceRef="Gateway_0fwj0nr" targetRef="Activity_05k3m0o" />
+    <bpmn:sequenceFlow id="Flow_04xp013" sourceRef="Activity_05k3m0o" targetRef="Event_01vy5kc" />
+    <bpmn:sequenceFlow id="Flow_14mxw1g" sourceRef="Activity_18kz6vb" targetRef="Gateway_0fwj0nr" />
+    <bpmn:sequenceFlow id="Flow_1e3e9sg" name="No limit available" sourceRef="Gateway_1kuo7pl" targetRef="Activity_1vdyuoi" />
+    <bpmn:sequenceFlow id="Flow_1s88hj3" sourceRef="Activity_1vdyuoi" targetRef="Event_09eco3s" />
+    <bpmn:dataStoreReference id="DataStoreReference_1d1j8w7" name="Loan DB" />
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Collaboration_1eoxj2e">
+      <bpmndi:BPMNShape id="Participant_035380y_di" bpmnElement="Participant_035380y" isHorizontal="true">
+        <dc:Bounds x="160" y="200" width="1650" height="330" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
+        <dc:Bounds x="262" y="242" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="240" y="285" width="81" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1wvof97_di" bpmnElement="Activity_0o4io7a">
+        <dc:Bounds x="370" y="220" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_1r0uafx_di" bpmnElement="Gateway_1r0uafx" isMarkerVisible="true">
+        <dc:Bounds x="535" y="235" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="521" y="219" width="77" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_0kc8xj5_di" bpmnElement="Gateway_0kc8xj5" isMarkerVisible="true">
+        <dc:Bounds x="805" y="235" width="50" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0kyp41r_di" bpmnElement="Activity_1d86pvi">
+        <dc:Bounds x="640" y="220" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_14htzk8_di" bpmnElement="Activity_03fvuft">
+        <dc:Bounds x="1190" y="220" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_18ynite_di" bpmnElement="Gateway_18ynite" isMarkerVisible="true">
+        <dc:Bounds x="1055" y="235" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1053" y="211" width="54" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1fngvrx_di" bpmnElement="Activity_05k3m0o">
+        <dc:Bounds x="1450" y="220" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_0fwj0nr_di" bpmnElement="Gateway_0fwj0nr" isMarkerVisible="true">
+        <dc:Bounds x="1355" y="235" width="50" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_01vy5kc_di" bpmnElement="Event_01vy5kc">
+        <dc:Bounds x="1722" y="242" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1709" y="285" width="62" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_1kuo7pl_di" bpmnElement="Gateway_1kuo7pl" isMarkerVisible="true">
+        <dc:Bounds x="925" y="235" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="912" y="211" width="76" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1as3e9i_di" bpmnElement="Activity_18kz6vb">
+        <dc:Bounds x="1190" y="340" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0emb5pj_di" bpmnElement="Activity_1vdyuoi">
+        <dc:Bounds x="1520" y="430" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_09eco3s_di" bpmnElement="Event_09eco3s">
+        <dc:Bounds x="1722" y="452" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1707" y="495" width="67" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="DataStoreReference_1d1j8w7_di" bpmnElement="DataStoreReference_1d1j8w7">
+        <dc:Bounds x="395" y="365" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="399" y="422" width="43" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_1hjhpfh_di" bpmnElement="Flow_1hjhpfh">
+        <di:waypoint x="298" y="260" />
+        <di:waypoint x="370" y="260" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0h6hg3f_di" bpmnElement="Flow_0h6hg3f">
+        <di:waypoint x="470" y="260" />
+        <di:waypoint x="535" y="260" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0y2h34x_di" bpmnElement="Flow_0y2h34x">
+        <di:waypoint x="740" y="260" />
+        <di:waypoint x="805" y="260" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_18bpvi6_di" bpmnElement="Flow_18bpvi6">
+        <di:waypoint x="585" y="260" />
+        <di:waypoint x="640" y="260" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0hoincd_di" bpmnElement="Flow_0hoincd">
+        <di:waypoint x="855" y="260" />
+        <di:waypoint x="925" y="260" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0iocsr8_di" bpmnElement="Flow_0iocsr8">
+        <di:waypoint x="560" y="285" />
+        <di:waypoint x="560" y="370" />
+        <di:waypoint x="830" y="370" />
+        <di:waypoint x="830" y="285" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="652" y="352" width="87" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_170qqcw_di" bpmnElement="Flow_170qqcw">
+        <di:waypoint x="1105" y="260" />
+        <di:waypoint x="1190" y="260" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1117" y="242" width="62" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_05tzt9z_di" bpmnElement="Flow_05tzt9z">
+        <di:waypoint x="1290" y="260" />
+        <di:waypoint x="1355" y="260" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_11kz4pi_di" bpmnElement="Flow_11kz4pi">
+        <di:waypoint x="975" y="260" />
+        <di:waypoint x="1055" y="260" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="980" y="242" width="70" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1oo3tg5_di" bpmnElement="Flow_1oo3tg5">
+        <di:waypoint x="1080" y="285" />
+        <di:waypoint x="1080" y="380" />
+        <di:waypoint x="1190" y="380" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1106" y="358" width="48" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0phg418_di" bpmnElement="Flow_0phg418">
+        <di:waypoint x="1405" y="260" />
+        <di:waypoint x="1450" y="260" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_04xp013_di" bpmnElement="Flow_04xp013">
+        <di:waypoint x="1550" y="260" />
+        <di:waypoint x="1722" y="260" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_14mxw1g_di" bpmnElement="Flow_14mxw1g">
+        <di:waypoint x="1290" y="380" />
+        <di:waypoint x="1380" y="380" />
+        <di:waypoint x="1380" y="285" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1e3e9sg_di" bpmnElement="Flow_1e3e9sg">
+        <di:waypoint x="950" y="285" />
+        <di:waypoint x="950" y="470" />
+        <di:waypoint x="1520" y="470" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="973" y="453" width="84" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1s88hj3_di" bpmnElement="Flow_1s88hj3">
+        <di:waypoint x="1620" y="470" />
+        <di:waypoint x="1722" y="470" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="Participant_0l5uddz_di" bpmnElement="Participant_1vnesut" isHorizontal="true">
+        <dc:Bounds x="160" y="80" width="1470" height="60" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="DataOutputAssociation_1qnw29v_di" bpmnElement="DataOutputAssociation_1qnw29v">
+        <di:waypoint x="420" y="300" />
+        <di:waypoint x="420" y="365" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_06cs1jb_di" bpmnElement="Flow_06cs1jb">
+        <di:waypoint x="280" y="140" />
+        <di:waypoint x="280" y="242" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_17t1urq_di" bpmnElement="Flow_17t1urq">
+        <di:waypoint x="1500" y="220" />
+        <di:waypoint x="1500" y="140" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1vcik05_di" bpmnElement="Flow_1vcik05">
+        <di:waypoint x="1570" y="430" />
+        <di:waypoint x="1570" y="140" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_183nfwt_di" bpmnElement="Flow_183nfwt">
+        <di:waypoint x="660" y="220" />
+        <di:waypoint x="660" y="140" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0rs75w5_di" bpmnElement="Flow_0rs75w5">
+        <di:waypoint x="710" y="140" />
+        <di:waypoint x="710" y="220" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>

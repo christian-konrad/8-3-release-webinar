@@ -1,0 +1,162 @@
+{
+  "executionPlatform": "Camunda Cloud",
+  "executionPlatformVersion": "8.2.0",
+  "exporter": {
+    "name": "Camunda Web Modeler",
+    "version": "6c0f1c1"
+  },
+  "schemaVersion": 11,
+  "components": [
+    {
+      "text": "**Max Allowance**
+{{loanOptions.currency}} {{loanOptions.maxAllowance}}",
+      "label": "Text view",
+      "type": "text",
+      "layout": {
+        "row": "Row_0w9nl89",
+        "columns": 4
+      },
+      "id": "Field_13vsqhg"
+    },
+    {
+      "text": "**Currently Used**
+{{loanOptions.currency}} {{loanOptions.currentlyUsed}}",
+      "label": "Text view",
+      "type": "text",
+      "layout": {
+        "row": "Row_0w9nl89",
+        "columns": null
+      },
+      "id": "Field_0szrrez"
+    },
+    {
+      "label": "Loan offer",
+      "type": "number",
+      "layout": {
+        "row": "Row_1aj6q8t",
+        "columns": null
+      },
+      "id": "Field_131agji",
+      "key": "offeredAdditionalLoan",
+      "validate": {
+        "max": "=loanOptions.maxAllowance - loanOptions.currentlyUsed"
+      },
+      "appearance": {
+        "prefixAdorner": "=loanOptions.currency"
+      },
+      "description": "Remaining allowance is {{loanOptions.currency}} {{loanOptions.maxAllowance - loanOptions.currentlyUsed - offeredAdditionalLoan}}",
+      "increment": "1000",
+      "defaultValue": 1000
+    },
+    {
+      "label": "Installment in Months",
+      "type": "select",
+      "layout": {
+        "row": "Row_1aj6q8t",
+        "columns": null
+      },
+      "id": "Field_1kr1f8g",
+      "key": "months",
+      "defaultValue": "<none>",
+      "valuesExpression": "=loanOptions.monthOptions",
+      "description": "The prospect requested {{requestedInstallments}} months installment"
+    },
+    {
+      "components": [
+        {
+          "text": "**Annual Rate**
+{{loanOptions.rate}}%",
+          "label": "Text view",
+          "type": "text",
+          "layout": {
+            "row": "Row_0m1wsij",
+            "columns": null
+          },
+          "id": "Field_06f8ql8"
+        },
+        {
+          "text": "**New loan**
+{{loanOptions.currency}} {{loanOptions.currentlyUsed + offeredAdditionalLoan}}",
+          "label": "Text view",
+          "type": "text",
+          "layout": {
+            "row": "Row_0m1wsij",
+            "columns": null
+          },
+          "id": "Field_1uscggn"
+        },
+        {
+          "text": "**Total Interest of new Loan**
+{{loanOptions.currency}} {{
+  floor(
+    (loanOptions.currentlyUsed + offeredAdditionalLoan) 
+        * loanOptions.rate / 100 * (months / 12)
+  )
+}}",
+          "label": "Text view",
+          "type": "text",
+          "layout": {
+            "row": "Row_1y5sav7",
+            "columns": null
+          },
+          "id": "Field_04ej0ya"
+        }
+      ],
+      "showOutline": false,
+      "label": "New Loan Details",
+      "type": "group",
+      "layout": {
+        "row": "Row_1j8s3f1",
+        "columns": null
+      },
+      "id": "Field_008u5to",
+      "conditional": {
+        "hide": "=(loanOptions.maxAllowance 
+  - loanOptions.currentlyUsed 
+  - offeredAdditionalLoan) < 0
+"
+      },
+      "path": "newLoanDetailsx"
+    },
+    {
+      "components": [
+        {
+          "text": "```
+{
+  \"loanOptions\": {
+    \"maxAllowance\": 50000,
+    \"currentlyUsed\": 39000,
+    \"rate\": 5.9,
+    \"currency\": \"USD\",
+    \"monthOptions\": [12, 24, 32]
+  },
+  \"requestedInstallments\": \"12\",
+  \"requestedLoan\": 3000
+}
+```",
+          "label": "Text view",
+          "type": "text",
+          "layout": {
+            "row": "Row_0awbuif",
+            "columns": null
+          },
+          "id": "Field_0irndim"
+        }
+      ],
+      "showOutline": true,
+      "label": "Example Data",
+      "type": "group",
+      "layout": {
+        "row": "Row_0b7nhby",
+        "columns": null
+      },
+      "id": "Field_1j382oe",
+      "conditional": {
+        "hide": "=true"
+      },
+      "path": "exampleData"
+    }
+  ],
+  "type": "default",
+  "id": "Form_1bi1yxu"
+}
